@@ -39,7 +39,7 @@ ORDER BY salary_year_avg
 ;
 
 /*
-Result:
+Results for Top Paying Jobs and Associated Skills:
 [
   {
     "job_id": 168310,
