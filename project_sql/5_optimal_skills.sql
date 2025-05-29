@@ -1,5 +1,5 @@
 /*
- Q: What are the most optimal skills to learn (high-paying AND in-demand)
+ Q: What are the most optimal skills to learn (high-paying AND in-demand)?
  - Identify skills in high demand with high average salaries for Business/Data Analyst Roles
  - Concentrate on remote jobs with specified salaries
  - Why? Target jobs that offer job security(high demand) and financial benefits(high pay) offering 

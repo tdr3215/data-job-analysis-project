@@ -1,5 +1,5 @@
 /*
-Q: What skills are required for the top paying Data/Business Analyst roles?
+Q: What skills are required for the top paying Business/Data Analyst roles?
 - Use the top 10 highest-paying roles from the first query
 - Add specific skills required for these roles
 - Why? Being aware of the top skills in the industry will help

@@ -1,5 +1,5 @@
 /*
- Q: What are the most in-demand skills for Business/Data Analysts?
+ Q: What are the most in-demand skills for Business/Data Analyst roles?
  - Join job postings to inner join table similar to query 2
  - Identify the top 5 in-demand skills for Business/Data Analysts
  - Focus on all job postings
