@@ -14,8 +14,8 @@ FROM
   JOIN skills_job_dim ON job_postings_fact.job_id = skills_job_dim.job_id
   JOIN skills_dim ON skills_job_dim.skill_id = skills_dim.skill_id
 WHERE
-  job_title_short in ('Business Analyst', 'Data Analyst')
-  AND job_location in ('Anywhere', 'Atlanta, GA', 'Georgia')
+  job_title_short IN ('Business Analyst', 'Data Analyst')
+  AND job_location IN ('Anywhere', 'Atlanta, GA', 'Georgia')
 GROUP BY
   skills
 ORDER BY

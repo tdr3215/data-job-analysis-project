@@ -113,6 +113,48 @@ The Breakdown:
 ![Top Skills for High Paying Data Analyst Jobs](assets/count_by_skill.png)
 
 _This is a bar graph of the different skills associated with high-paying jobs as well as their frequency._
+
+### Most In-Demand Skills for Data Analysts
+While it's important to know the skills required to find a high-paying job, these roles tend to go to more senior job-seekers. 
+
+By exploring the overall demand for certain skills, I'll get a more comprehensive view of skill requirements for data analysts. 
+
+This can be done by joining the skills to their appropriate job postings and then finding the top 5 skills by count.
+
+```sql
+SELECT
+  skills,
+  COUNT(skills_job_dim.job_id) AS demand_count
+FROM
+  job_postings_fact
+  JOIN skills_job_dim ON job_postings_fact.job_id = skills_job_dim.job_id
+  JOIN skills_dim ON skills_job_dim.skill_id = skills_dim.skill_id
+WHERE
+  job_title_short IN ('Business Analyst', 'Data Analyst')
+  AND job_location IN ('Anywhere', 'Atlanta, GA', 'Georgia')
+GROUP BY
+  skills
+ORDER BY
+  demand_count DESC
+LIMIT
+  5;
+```
+Here's the breakdown of the top 5 skills for data analysts in 2023:
+
+- **Importance of SQL:** SQL came up in over 10,000 job postings in 2023. We can safely say that learning the #1 skill through projects like these will help job-seekers
+- **Top skills are robust to salary:** When comparing the top skills of high paying jobs against the rest of the sample, we can see many of the same values including: **Excel, Python, and Tableau**
+
+### In-Demand Skills
+|Skills   |Demand Count  |
+|------:  |:------------:|
+|sql      |10325         |
+|excel    |6886          |
+|python   |5787          |
+|tableau  |5484          |
+|power bi |3808          |
+
+_A table of the top 5 most in-demand skills for data analysts in 2023._
+
 # What I Learned
 
 # Conclusions
