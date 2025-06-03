@@ -192,37 +192,101 @@ The breakdown of top paying skills for data analysts:
 - **Speciliazed Skills:** When doing research on some of the top skills listed, I found many of them to be for Machine Learning and Big Data such as **Pyspark, Bitbucket, and Watson**. Considering a specialized field to work in can improve financial stability for job-seekers.
 - **Financial Security:** Out of the top 25 skills,the highest paying skill has an average yearly salary of $208,172 with the lowest being $114,158. Learning any of the skills on this list will increase financial oppurtunites.
 
-### Top Paying Skills Table
+### Top 10 Paying Skills Table
 
-|        Skills | Avg Salary by Year |
-| ------------: | :----------------: |
-|       pyspark |      $208,172      |
-|     bitbucket |      $189,155      |
-|        watson |      $160,515      |
-|     couchbase |      $160,515      |
-|     datarobot |      $155,486      |
-|        gitlab |      $154,500      |
-|         swift |      $153,750      |
-|       jupyter |      $152,777      |
-|          chef |      $152,500      |
-|        pandas |      $151,821      |
-|        golang |      $145,000      |
-|         numpy |      $143,513      |
-|    databricks |      $139,006      |
-|     atlassian |      $131,162      |
-| elasticsearch |      $127,500      |
-|        twilio |      $127,000      |
-|       airflow |      $126,103      |
-|  scikit-learn |      $125,781      |
-|       jenkins |      $125,436      |
-|         scala |      $124,903      |
-|       crystal |      $120,100      |
-|         linux |      $119,338      |
-|           gcp |      $119,167      |
-|    kubernetes |      $116,667      |
-|           db2 |      $114,158      |
+|    Skills | Avg Salary by Year |
+| --------: | :----------------: |
+|   pyspark |      $208,172      |
+| bitbucket |      $189,155      |
+|    watson |      $160,515      |
+| couchbase |      $160,515      |
+| datarobot |      $155,486      |
+|    gitlab |      $154,500      |
+|     swift |      $153,750      |
+|   jupyter |      $152,777      |
+|      chef |      $152,500      |
+|    pandas |      $151,821      |
 
-_A table showing the top 25 highest paying skills for remote data analysts._
+_A table showing the top 10 highest paying skills for remote data analysts._
+
+### Top Optimal Job Skills for Business/Data Analysts
+
+To round out my analysis, I needed to find the skills that are not only the most in-demannd but also offer the highest pay.
+
+I created 2 CTEs, one with jobs with highest salaries and one with jobs with the most in-demand skills. From there, I was able to sort by demand and then by salary. I chose to sort by demand first so that we can hit as many entries as possible.
+
+```sql
+WITH in_demand_skills AS (
+    SELECT
+        skills_dim.skills,
+        skills_dim.skill_id,
+        COUNT(skills_job_dim.job_id) AS demand_count
+    FROM
+        job_postings_fact
+        JOIN skills_job_dim ON job_postings_fact.job_id = skills_job_dim.job_id
+        JOIN skills_dim ON skills_job_dim.skill_id = skills_dim.skill_id
+    WHERE
+        job_title_short in ('Business Analyst', 'Data Analyst')
+        AND salary_year_avg IS NOT NULL
+        AND job_work_from_home = True
+    GROUP BY
+        skills_dim.skill_id
+),
+average_salary AS (
+    SELECT
+        skills_job_dim.skill_id,
+        ROUND(AVG(salary_year_avg), 0) AS avg_salary
+    FROM
+        job_postings_fact
+        JOIN skills_job_dim ON job_postings_fact.job_id = skills_job_dim.job_id
+        JOIN skills_dim ON skills_job_dim.skill_id = skills_dim.skill_id
+    WHERE
+        job_title_short in ('Business Analyst', 'Data Analyst')
+        AND salary_year_avg IS NOT NULL
+        AND job_work_from_home = True
+    GROUP BY
+        skills_job_dim.skill_id
+)
+SELECT
+    in_demand_skills.skill_id,
+    in_demand_skills.skills,
+    demand_count,
+    avg_salary
+FROM
+    in_demand_skills
+    JOIN average_salary ON in_demand_skills.skill_id = average_salary.skill_id
+WHERE
+    demand_count > 10
+ORDER BY
+    demand_count DESC,
+    avg_salary DESC
+LIMIT
+    25;
+```
+
+The breakdown of the most optimal skills for data analysts:
+
+- **Consistency:** SQL has been #1 for both highest average salary and most in-demand skill. Across each query, this has remained true.
+- **Demand for variety of skills:** We can see that in order to earn the most money, you also need to have a large variety of skills.
+  Some of these skills include data manipulation like **Excel** and data visualization like **Tableau and Power BI**.
+
+### Top 10 Optimal Skills Table
+
+|     Skills | Demand Count | Avg Salary by Year |
+| ---------: | :----------: | :----------------: |
+|        sql |     440      |      $97,417       |
+|      excel |     287      |      $88,027       |
+|    tableau |     257      |      $99,807       |
+|     python |     256      |      $102,578      |
+|          r |     156      |      $101,223      |
+|   power bi |     122      |      $96,744       |
+|        sas |      70      |      $98,908       |
+| powerpoint |      63      |      $89,661       |
+|     looker |      54      |      $106,259      |
+|       word |      52      |      $84,012       |
+
+_A table detailing the demand count and average salary by skill._
+
 # What I Learned
 
 # Conclusions
