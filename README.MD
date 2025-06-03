@@ -28,6 +28,7 @@ The data consists of international information on job postings in the data world
 
 - **SQL:** The backbone of my analysis, allowing me to query and glean insight from the data
 - **PostgreSQL:** The chosen database management source, it's a common and powerful relational database system
+- **Excel/Google Sheets:** My main source for visualizations and advanced querying
 - **Visual Studio Code:** My essential IDE for most of my coding projects
 - **Git & Github:** A perfect place to share my code with others as well as maintain version control
 
@@ -68,8 +69,50 @@ Here's the breakdown of the top data analyst jobs in 2023:
 - **Job Title Variety:** There's also a high-variety in job titles as Marketing Analyst, Senior Data Analyst and Director of Analytics are part of the list.
 
 ![Top Paying Roles](assets/Job_Title_Avg_Year_Salary.png)
+
 _This is a bar graph visualizing the results for the top 10 salaries for data analysts. I generated this graph using Google Sheets._
 
+### Top Skills of High Paying Jobs for Data Analysts 
+
+Using the results from my first query as a CTE, I determined which skills these top paying jobs required. I used an inner join to ensure that I only captured jobs that had associated skills and vice versa. 
+```sql
+WITH top_paying_jobs AS (
+    SELECT
+        job_id,
+        job_title,
+        job_location,
+        job_schedule_type,
+        salary_year_avg,
+        job_posted_date::Date,
+        name AS company_name
+    FROM
+        job_postings_fact
+        LEFT JOIN company_dim ON job_postings_fact.company_id = company_dim.company_id
+    WHERE
+        job_title_short in ('Data Analyst', 'Business Analyst')
+        AND salary_year_avg IS NOT NULL
+        AND job_location in ('Anywhere', 'Atlanta, GA', 'Georgia')
+    ORDER BY
+        salary_year_avg DESC
+    LIMIT
+        10
+)
+SELECT 
+    top_paying_jobs.*,
+    skills
+FROM top_paying_jobs
+JOIN skills_job_dim ON top_paying_jobs.job_id = skills_job_dim.job_id
+JOIN skills_dim ON skills_job_dim.skill_id = skills_dim.skill_id
+ORDER BY salary_year_avg
+;
+```
+The Breakdown:
+- **Variety of Skill Range:** There were 39 different skills between the variety of jobs so data analysts aren't limited in technological oppurtinuties skill-wise
+- **High Frequency of Specific Skills:** According to the graph below, **Python**, **SQL**, and **Tableau** are equally the most common skills amongst high-paying jobs with **Excel** as a close second.
+
+![Top Skills for High Paying Data Analyst Jobs](assets/count_by_skill.png)
+
+_This is a bar graph of the different skills associated with high-paying jobs as well as their frequency._
 # What I Learned
 
 # Conclusions

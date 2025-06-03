@@ -15,7 +15,7 @@ WITH top_paying_jobs AS (
         job_location,
         job_schedule_type,
         salary_year_avg,
-        job_posted_date,
+        job_posted_date::Date,
         name AS company_name
     FROM
         job_postings_fact
