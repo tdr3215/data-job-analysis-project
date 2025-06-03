@@ -72,9 +72,10 @@ Here's the breakdown of the top data analyst jobs in 2023:
 
 _This is a bar graph visualizing the results for the top 10 salaries for data analysts. I generated this graph using Google Sheets._
 
-### Top Skills of High Paying Jobs for Data Analysts 
+### Top Skills of High Paying Jobs for Data Analysts
 
-Using the results from my first query as a CTE, I determined which skills these top paying jobs required. I used an inner join to ensure that I only captured jobs that had associated skills and vice versa. 
+Using the results from my first query as a CTE, I determined which skills these top paying jobs required. I used an inner join to ensure that I only captured jobs that had associated skills and vice versa.
+
 ```sql
 WITH top_paying_jobs AS (
     SELECT
@@ -97,7 +98,7 @@ WITH top_paying_jobs AS (
     LIMIT
         10
 )
-SELECT 
+SELECT
     top_paying_jobs.*,
     skills
 FROM top_paying_jobs
@@ -106,7 +107,9 @@ JOIN skills_dim ON skills_job_dim.skill_id = skills_dim.skill_id
 ORDER BY salary_year_avg
 ;
 ```
+
 The Breakdown:
+
 - **Variety of Skill Range:** There were 39 different skills between the variety of jobs so data analysts aren't limited in technological oppurtinuties skill-wise
 - **High Frequency of Specific Skills:** According to the graph below, **Python**, **SQL**, and **Tableau** are equally the most common skills amongst high-paying jobs with **Excel** as a close second.
 
@@ -115,9 +118,10 @@ The Breakdown:
 _This is a bar graph of the different skills associated with high-paying jobs as well as their frequency._
 
 ### Most In-Demand Skills for Data Analysts
-While it's important to know the skills required to find a high-paying job, these roles tend to go to more senior job-seekers. 
 
-By exploring the overall demand for certain skills, I'll get a more comprehensive view of skill requirements for data analysts. 
+While it's important to know the skills required to find a high-paying job, these roles tend to go to more senior job-seekers.
+
+By exploring the overall demand for certain skills, I'll get a more comprehensive view of skill requirements for data analysts.
 
 This can be done by joining the skills to their appropriate job postings and then finding the top 5 skills by count.
 
@@ -139,22 +143,86 @@ ORDER BY
 LIMIT
   5;
 ```
+
 Here's the breakdown of the top 5 skills for data analysts in 2023:
 
 - **Importance of SQL:** SQL came up in over 10,000 job postings in 2023. We can safely say that learning the #1 skill through projects like these will help job-seekers
 - **Top skills are robust to salary:** When comparing the top skills of high paying jobs against the rest of the sample, we can see many of the same values including: **Excel, Python, and Tableau**
 
-### In-Demand Skills
-|Skills   |Demand Count  |
-|------:  |:------------:|
-|sql      |10325         |
-|excel    |6886          |
-|python   |5787          |
-|tableau  |5484          |
-|power bi |3808          |
+### In-Demand Skills Table
+
+|   Skills | Demand Count |
+| -------: | :----------: |
+|      sql |    10325     |
+|    excel |     6886     |
+|   python |     5787     |
+|  tableau |     5484     |
+| power bi |     3808     |
 
 _A table of the top 5 most in-demand skills for data analysts in 2023._
 
+### Top Paying Skills for Remote Business/Data Analyst Jobs
+
+My goal is to work remotely so I also took a look at skills required for the highest paying remote jobs.
+
+By joining the skills table to the job postings table, I was able to sort the skills by highest salary and remote availability.
+
+```sql
+SELECT
+    skills,
+    ROUND(AVG(salary_year_avg),0) AS avg_salary
+FROM
+    job_postings_fact
+    JOIN skills_job_dim ON job_postings_fact.job_id = skills_job_dim.job_id
+    JOIN skills_dim ON skills_job_dim.skill_id = skills_dim.skill_id
+WHERE
+    job_title_short in ('Business Analyst', 'Data Analyst')
+    AND salary_year_avg IS NOT NULL
+    AND job_work_from_home = True
+GROUP BY
+    skills
+ORDER BY
+    avg_salary DESC
+LIMIT
+    25;
+```
+
+The breakdown of top paying skills for data analysts:
+
+- **Speciliazed Skills:** When doing research on some of the top skills listed, I found many of them to be for Machine Learning and Big Data such as **Pyspark, Bitbucket, and Watson**. Considering a specialized field to work in can improve financial stability for job-seekers.
+- **Financial Security:** Out of the top 25 skills,the highest paying skill has an average yearly salary of $208,172 with the lowest being $114,158. Learning any of the skills on this list will increase financial oppurtunites.
+
+### Top Paying Skills Table
+
+|        Skills | Avg Salary by Year |
+| ------------: | :----------------: |
+|       pyspark |      $208,172      |
+|     bitbucket |      $189,155      |
+|        watson |      $160,515      |
+|     couchbase |      $160,515      |
+|     datarobot |      $155,486      |
+|        gitlab |      $154,500      |
+|         swift |      $153,750      |
+|       jupyter |      $152,777      |
+|          chef |      $152,500      |
+|        pandas |      $151,821      |
+|        golang |      $145,000      |
+|         numpy |      $143,513      |
+|    databricks |      $139,006      |
+|     atlassian |      $131,162      |
+| elasticsearch |      $127,500      |
+|        twilio |      $127,000      |
+|       airflow |      $126,103      |
+|  scikit-learn |      $125,781      |
+|       jenkins |      $125,436      |
+|         scala |      $124,903      |
+|       crystal |      $120,100      |
+|         linux |      $119,338      |
+|           gcp |      $119,167      |
+|    kubernetes |      $116,667      |
+|           db2 |      $114,158      |
+
+_A table showing the top 25 highest paying skills for remote data analysts._
 # What I Learned
 
 # Conclusions
