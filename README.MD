@@ -192,7 +192,7 @@ The breakdown of top paying skills for data analysts:
 - **Speciliazed Skills:** When doing research on some of the top skills listed, I found many of them to be for Machine Learning and Big Data such as **Pyspark, Bitbucket, and Watson**. Considering a specialized field to work in can improve financial stability for job-seekers.
 - **Financial Security:** Out of the top 25 skills,the highest paying skill has an average yearly salary of $208,172 with the lowest being $114,158. Learning any of the skills on this list will increase financial oppurtunites.
 
-### Top 10 Paying Skills Table
+### Top 10 Highest Paying Skills Table
 
 |    Skills | Avg Salary by Year |
 | --------: | :----------------: |
@@ -288,5 +288,10 @@ The breakdown of the most optimal skills for data analysts:
 _A table detailing the demand count and average salary by skill._
 
 # What I Learned
+Throughout this journey, I've gained a much deeper understanding of SQL and its importance. Here are a few takeaways from this project:
+- **🧩 Complex Query Crafting:** I improved my SQL skills by using techniques like CTEs and JOINs to perform complex querying.
+- **📊 Data Aggregation:** I got more comfortable with aggregate functions such as COUNT() and AVG() and sorting through the results with GROUP BY clauses.
+- **🔎 Analytical Mindset:** I honed my problem solving skills in emulating what I'd see in the workplace by using real-world data.
 
 # Conclusions
+
